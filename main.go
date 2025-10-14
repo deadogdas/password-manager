@@ -3,17 +3,41 @@ package main
 import (
 	"fmt"
 	"password/account"
-	"password/files"
+
 )
 
 
 func main (){
+	fmt.Println("__Менеджер паролей__")
+Menu:
+	for{
+		variant := getMenu()
+		switch variant{
+		case 1 :
+			createAccount()
+		case 2:
+			fiendAccount()
+		case 3:
+			deleteAccount()
+		case 4:
+			break Menu
+		}
+	}
 	createAccount()
 }
 
+func getMenu() int{
+	var variant int 
+	fmt.Println("Выберите вариант:")
+	fmt.Println("1.Создать аккаунт")
+	fmt.Println("2.Найти аккаунт")
+	fmt.Println("3.Удалить аккаунт")
+	fmt.Println("4.Выход")
+	fmt.Scan(&variant)
+	return variant
+}
+
 func createAccount(){
-	// files.ReadFile()
-	// files.WriteFile("Привет!", "file.txt")
 	login := promptData("Введите логин")
 	password := promptData("Введите пароль")
 	url := promptData("Введите Url")
@@ -22,12 +46,8 @@ func createAccount(){
 		fmt.Println("Не верный формат URL")
 		return
 	}
-	file, err := myAccount.ToBytes()
-		if err != nil{
-		fmt.Println("Не удалось приобразовать в JSON")
-		return
-	} 
-	files.WriteFile(file,"data.json")
+	vault := account.NewVault()
+	vault.AddAccount(*myAccount)
 }
 
 func promptData(prompt string) string{
@@ -37,3 +57,10 @@ func promptData(prompt string) string{
 	return res
 }
 
+func fiendAccount(){
+
+}
+
+func deleteAccount(){
+
+}
