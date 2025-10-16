@@ -3,6 +3,7 @@ package account
 import (
 	"encoding/json"
 	"password/files"
+	"strings"
 	"time"
 
 	"github.com/fatih/color"
@@ -31,6 +32,38 @@ func NewVault() *Vault{
 		}
 	}
 	return &vault
+}
+
+func (vault Vault) DeleteAccountByUrl(url string) bool{
+	var accounts []Account
+	isDeleted := false
+	for _, account := range vault.Accounts{
+		isMatched := strings.Contains(account.Url, url)
+		if isMatched{
+			accounts =append(accounts, account)
+			continue
+		}
+		isDeleted = true
+	}
+	vault.Accounts = accounts
+	vault.UpdateAt = time.Now()
+	data,err := vault.ToBytes()
+	if err != nil{
+		color.Red("Не удалось преобразовать")
+	}
+	files.WriteFile(data, "data.json")
+	return isDeleted
+}
+
+func (vault *Vault) FiendAccountsByUrl(url string) []Account{
+	var accounts []Account
+	for _, account := range vault.Accounts{
+		isMatched := strings.Contains(account.Url, url)
+		if isMatched{
+			accounts = append(accounts, account)
+		}
+	}
+	return accounts
 }
 
 func (vault *Vault) AddAccount(acc Account){
