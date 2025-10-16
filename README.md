@@ -19,6 +19,3 @@
 # Клонирование репозитория
 git clone https://github.com/deadogdas/password-manager.git
 cd password-manager
-
-# Запуск приложения
-go run main.go
