@@ -14,8 +14,3 @@
 ### Требования
 - Установленный Go (версия 1.16 или выше)
 
-### Запуск
-```bash
-# Клонирование репозитория
-git clone https://github.com/deadogdas/password-manager.git
-cd password-manager
